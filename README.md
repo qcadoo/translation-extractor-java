@@ -1,2 +1,2 @@
 # translation-extractor-java
-Tool used to extract translation files and manage missing translation keys
+Tool used to export and import missing translations.
