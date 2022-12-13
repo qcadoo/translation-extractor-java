@@ -1,14 +1,13 @@
 package com.qcadoo.helpers;
 
-import java.io.File;
-
+import com.qcadoo.dtos.TranslationPosition;
 import org.apache.commons.lang3.StringUtils;
 
-import com.qcadoo.dtos.TranslationPosition;
+import java.io.File;
 
 public class MissingTranslationsHelper {
 
-    public static final String L_DIRECTORY = "/Users/username/";
+    public static final String L_DIRECTORY = "./";
 
     public static final String L_DOT = ".";
 
@@ -26,16 +25,20 @@ public class MissingTranslationsHelper {
 
     public static final String L_N = "\n";
 
+    private static String getTranslationsDirectoryName(final String pathname) {
+        return new StringBuilder(L_DIRECTORY).append(pathname).append(L_SLASH).toString();
+    }
+
     public static String getDirectoryName(final String pathname, final String project) {
-        return new StringBuilder(L_DIRECTORY).append(pathname).append(L_SLASH).append(project).append(L_SLASH).toString();
+        return new StringBuilder(getTranslationsDirectoryName(pathname)).append(project).append(L_SLASH).toString();
     }
 
     public static String getPropertiesLanguageAndExtension(final String language) {
         return new StringBuilder(language).append(L_DOT).append(L_PROPERTIES).toString();
     }
 
-    public static File getTranslationsFile(final String project, final String extension) {
-        File directory = new File(MissingTranslationsHelper.L_DIRECTORY);
+    public static File getTranslationsFile(final String pathname, final String project, final String extension) {
+        File directory = new File(getTranslationsDirectoryName(pathname));
 
         directory.mkdirs();
 

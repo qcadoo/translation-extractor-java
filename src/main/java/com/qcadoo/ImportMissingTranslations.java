@@ -1,18 +1,8 @@
 package com.qcadoo;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
+import com.google.common.collect.Lists;
+import com.qcadoo.dtos.TranslationPosition;
+import com.qcadoo.helpers.MissingTranslationsHelper;
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -21,9 +11,13 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.google.common.collect.Lists;
-import com.qcadoo.dtos.TranslationPosition;
-import com.qcadoo.helpers.MissingTranslationsHelper;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class ImportMissingTranslations {
 
@@ -34,7 +28,7 @@ public class ImportMissingTranslations {
         String toLanguage = "cn";
 
         importTranslationPositions(pathname, project, fromLanguage, toLanguage,
-                getTranslationPositions(project, fromLanguage, toLanguage));
+                getTranslationPositions(pathname, project, fromLanguage, toLanguage));
     }
 
     private static void importTranslationPositions(final String pathname, final String project, final String fromLanguage,
@@ -70,9 +64,9 @@ public class ImportMissingTranslations {
         }
     }
 
-    private static Map<String, List<TranslationPosition>> getTranslationPositions(final String project, final String fromLanguage,
+    private static Map<String, List<TranslationPosition>> getTranslationPositions(final String pathname, final String project, final String fromLanguage,
             final String toLanguage) {
-        File file = MissingTranslationsHelper.getTranslationsFile(project, MissingTranslationsHelper.L_XLSX);
+        File file = MissingTranslationsHelper.getTranslationsFile(pathname, project, MissingTranslationsHelper.L_XLSX);
 
         List<TranslationPosition> positions = Lists.newArrayList();
 
