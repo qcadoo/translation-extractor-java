@@ -22,13 +22,19 @@ import java.util.stream.Collectors;
 public class ImportMissingTranslations {
 
     public static void main(final String[] args) throws IOException {
-        String pathname = "translations";
-        String project = "qcadoo";
-        String fromLanguage = "en";
-        String toLanguage = "cn";
+        if (args.length < 4) {
+            System.out.println("Arguments are empty, usage: <pathname> <project> <fromLanguage> <toLanguage>");
+        } else {
+            System.out.println("Importing translations for: " + args[1]);
 
-        importTranslationPositions(pathname, project, fromLanguage, toLanguage,
-                getTranslationPositions(pathname, project, fromLanguage, toLanguage));
+            String pathname = args[0];
+            String project = args[1];
+            String fromLanguage = args[2];
+            String toLanguage = args[3];
+
+            importTranslationPositions(pathname, project, fromLanguage, toLanguage,
+                    getTranslationPositions(pathname, project, fromLanguage, toLanguage));
+        }
     }
 
     private static void importTranslationPositions(final String pathname, final String project, final String fromLanguage,
@@ -97,8 +103,8 @@ public class ImportMissingTranslations {
         return positions.stream().collect(Collectors.groupingBy(TranslationPosition::getPath));
     }
 
-    private static String formatCell(final Cell cell, final String fromLanguage) {
-        Locale locale = new Locale(fromLanguage);
+    private static String formatCell(final Cell cell, final String language) {
+        Locale locale = new Locale(language);
 
         final DataFormatter dataFormatter = new DataFormatter(Objects.isNull(locale) ? Locale.getDefault() : locale);
 

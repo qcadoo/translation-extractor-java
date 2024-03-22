@@ -22,15 +22,19 @@ import java.util.Optional;
 public class ExportMissingTranslations {
 
     public static void main(final String[] args) throws IOException {
-        System.out.println("Creating translations for: " + args[1]);
+        if (args.length < 4) {
+            System.out.println("Arguments are empty, usage: <pathname> <project> <fromLanguage> <toLanguage>");
+        } else {
+            System.out.println("Exporting translations for: " + args[1]);
 
-        String pathname = args[0];
-        String project = args[1];
-        String fromLanguage = "en";
-        String toLanguage = "cn";
+            String pathname = args[0];
+            String project = args[1];
+            String fromLanguage = args[2];
+            String toLanguage = args[3];
 
-        exportTranslationPositions(pathname, project, fromLanguage, toLanguage,
-                getTranslationPositions(pathname, project, fromLanguage, toLanguage));
+            exportTranslationPositions(pathname, project, fromLanguage, toLanguage,
+                    getTranslationPositions(pathname, project, fromLanguage, toLanguage));
+        }
     }
 
     private static void exportTranslationPositions(final String pathname, final String project, final String fromLanguage, final String toLanguage,
